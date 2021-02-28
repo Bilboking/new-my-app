@@ -1,18 +1,23 @@
 const Navbar = () => {
     return ( 
         <nav className="navbar">
-            <h1>Bruce King's Blog</h1>
+            <h1>Bilbo Baggin's Blog</h1>
             <div className="links">
                 <a href="/" style={{
-                    color: "black",
-                    background: "pink",
+                    color: "white",
+                    background: "green",
                     borderRadius: '8px'
-                }}>Home </a>
+                }}>Bag End </a>
                 <a href="/create" style={{
                     color: "white",
                     backgroundColor: "blue",
                     borderRadius: '8px'
-                }}>New Blog</a>
+                }}>The Shire</a>
+                <a href="/create" style={{
+                    color: "white",
+                    backgroundColor: "grey",
+                    borderRadius: '8px'
+                }}>Mirkwood</a>
             </div>
         </nav>
  );

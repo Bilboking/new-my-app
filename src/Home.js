@@ -1,23 +1,42 @@
+import { useState, useEffect } from 'react'
+import BlogList from './BlogList';
+//** storing data in useState so React can update the DOM when things change */
+
 const Home = () => {
-//** getting the event object data */
-    const handleClick = (e) => {
-        console.log('hello people', e)
-    }
-//** creating an event that can pass in a string, function argument etc.   */
-//** goes with line 16 button 'handleClickAgain' */
-    const handleClickAgain = (name,e) => {
-        console.log('hello ' + name, e.target)
-    }
+    const [blogs, setBlogs] = useState(null);
+    const [isPending, setIsPending] = useState(true)
+    const [error, setError] = useState(null);
+   
+
+        useEffect(() => {
+            fetch('http://localhost:8000/blogs')
+            .then(res => {
+                if(!res.ok){
+                    throw Error('Could not fetch data for that resource.')
+                }
+
+           
+                return res.json();
+            })
+            .then(data => {
+            setBlogs(data);
+            setIsPending(false)
+            setError(null)
+            })
+            .catch(err => {
+                setIsPending(false);
+                setError(err.message)
+            })
+        }, []);
 
     return ( 
         <div className="home">
-            <h2>Homepage</h2>
-            <button onClick={ handleClick }>Click me</button>
-            <button onClick={(e) => 
-                handleClickAgain('mario', e)
-            }>Click me again</button>
+            { error && <div>{ error }</div>}
+            { isPending && <div>Loading...</div>}
+            { blogs && <BlogList blogs={ blogs } title= 'Blogs From Middle-Earth'/> }
+           
         </div>
- );
+    );
 }
  
 export default Home;
